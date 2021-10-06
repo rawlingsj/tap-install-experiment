@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: app-accelerator-tap-install
+  name: app-accelerator-tap-install-values
+  namespace: tap-install
+stringData:
+  app-accelerator-values.yaml: |
+    server:
+      # Set the engine.service_type to "NodePort" for local clusters like minikube or kind.
+      service_type: "NodePort"
+      watched_namespace: "default"
+      engine_invocation_url: "http://acc-engine.accelerator-system.svc.cluster.local/invocations"
+    engine:
+      service_type: "ClusterIP"
+type: Opaque

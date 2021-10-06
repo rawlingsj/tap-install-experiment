@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: image-policy-webhook-tap-install
+  name: image-policy-webhook-tap-install-values
+  namespace: tap-install
+stringData:
+  scst-sign-values.yaml: |
+    ---
+    warn_on_unmatched: true
+type: Opaque

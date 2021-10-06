@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: default-supply-chain-tap-install
+  name: default-supply-chain-tap-install-values
+  namespace: tap-install
+stringData:
+  "11": |
+    ---
+    registry:
+      server: ghcr.io
+      repository: rawlingsj
+type: Opaque

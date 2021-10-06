@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: app-live-view-tap-install
+  name: app-live-view-tap-install-values
+  namespace: tap-install
+stringData:
+  app-live-view-values.yaml: |
+    ---
+    connector_namespaces: [default]
+    server_namespace: app-live-view
+type: Opaque

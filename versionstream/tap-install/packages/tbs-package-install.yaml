@@ -1,0 +1,22 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRole: tbs-tap-install-cluster-role
+    tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: tbs-tap-install-cluster-rolebinding
+    tkg.tanzu.vmware.com/tanzu-package-Secret: tbs-tap-install-values
+    tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: tbs-tap-install-sa
+  finalizers:
+  - finalizers.packageinstall.packaging.carvel.dev/delete
+  name: tbs
+  namespace: tap-install
+spec:
+  packageRef:
+    refName: buildservice.tanzu.vmware.com
+    versionSelection:
+      constraints: 1.3.0
+      prereleases: {}
+  serviceAccountName: tbs-tap-install-sa
+  values:
+  - secretRef:
+      name: tbs-tap-install-values
