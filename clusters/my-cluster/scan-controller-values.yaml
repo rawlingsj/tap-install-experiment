@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: scan-controller-tap-install
+  name: scan-controller-tap-install-values
+  namespace: tap-install
+stringData:
+  scst-scan-controller-values.yaml: |
+    ---
+    metadataStoreUrl: https://metadata-store-app.metadata-store.svc.cluster.local:8443
+    metadataStoreCa: |-
+      -----BEGIN CERTIFICATE-----
+      MIIC8TCCAdmgAwIBAgIRAIGDgx7Dk/2unVKuT9KXetUwDQYJKoZIhvcNAQELBQAw
+      ...
+      hOSbQ50VLo+YPF9NtTPRaS7QaIcFWot0EPwBMOCZR6Dd1HU6Qg==
+      -----END CERTIFICATE-----
+    metadataStoreTokenSecret: metadata-store-secret
+type: Opaque

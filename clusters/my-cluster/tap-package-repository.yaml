@@ -1,0 +1,11 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  finalizers:
+  - finalizers.packagerepository.packaging.carvel.dev/delete
+  name: tanzu-tap-repository
+  namespace: tap-install
+spec:
+  fetch:
+    imgpkgBundle:
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages:0.2.0

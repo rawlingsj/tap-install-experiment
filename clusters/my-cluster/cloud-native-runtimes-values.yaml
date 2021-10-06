@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: cloud-native-runtimes-tap-install
+  name: cloud-native-runtimes-tap-install-values
+  namespace: tap-install
+stringData:
+  cnr-values.yaml: |
+    ---
+    # if deploying on a local cluster such as Kind. Otherwise, you can use the defaults values to install CNR.
+    provider: local
+type: Opaque
