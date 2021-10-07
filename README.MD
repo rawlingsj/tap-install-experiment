@@ -1,4 +1,14 @@
-set environment variables
+set local environment variables
+
+eg
+export TANZU_NET_USER=foo # username after signing up to https://network.tanzu.vmware.com/ to pull Tanzu Application platform images
+export TANZU_NET_PASSWORD=bar123! # password after sigining up to https://network.tanzu.vmware.com/ to pull Tanzu Application platform images
+export REGISTRY_SERVER=docker.io/cheese # a container registry server and user / organisation to push images to
+export REGISTRY_USERNAME=wine # a container registry username authenticatiom to push images to
+export REGISTRY_PASSWORD=beer456! # a container registry password or token authenticatiom to push images to
+export GITHUB_USER=dbekham # github username to interact with github
+export GITHUB_TOKEN=ghp_1234 # github personal access token used to interact with github see https://github.com/settings/tokens/new?scopes=repo,read:user,read:org,user:email,write:repo_hook,admin:repo_hook
+
 ```
 export TANZU_NET_USER=
 export TANZU_NET_PASSWORD=
@@ -12,6 +22,8 @@ export GITHUB_TOKEN=
 ```
 kind create cluster --name tap
 ```
+
+Install base set of installer tooling (would be good to move certmanager + secrets manager into GitOps repo):
 ```
 kapp deploy --yes -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/v0.27.0/release.yml
 
@@ -20,9 +32,6 @@ kapp deploy --yes -a sg -f https://github.com/vmware-tanzu/carvel-secretgen-cont
 kapp deploy --yes -a cert-manager -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
 ```
 
-```
-kubectl create ns tap-install
-```
 ```
 tanzu imagepullsecret add tap-registry \
   --username $TANZU_NET_USER --password $TANZU_NET_PASSWORD \
@@ -44,14 +53,11 @@ flux bootstrap github \
   --personal
 ```
 
-
-
-
 =========
 
-now add some secrets that contain sensitive data:
+now add three secrets that contain sensitive data so not stored in git (let's automate this):
 
-(following can to be replaced using some templating approach)
+(following can to be replaced using some better templating approach)
 
 1. tbs registry details
 
@@ -116,10 +122,7 @@ stringData:
 $(awk '{printf "      %s\n", $0}' < DELETEME)
     metadataStoreTokenSecret: metadata-store-secret
 type: Opaque
-EOF
-```
-```bash
-rm DELETEME
+EOF && rm DELETEME
 ```
 
 watch until package reconciles:
@@ -136,3 +139,4 @@ Caveats
 
 - defaulted to local (kind) installs
 - no Cosign secrets setup
+- github personal user setup, github organisatiom and other git provider support can be found https://fluxcd.io/docs/installation/#bootstrap
