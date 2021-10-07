@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: tbs-tap-install
+  name: tbs-tap-install-sa
+  namespace: tap-install

@@ -1,21 +1,56 @@
+set environment variables
+```
+export TANZU_NET_USER=
+export TANZU_NET_PASSWORD=
+export REGISTRY_SERVER=
+export REGISTRY_USERNAME=
+export REGISTRY_PASSWORD=
+export GITHUB_USER=
+export GITHUB_TOKEN=
+```
+
+```
+kind create cluster --name tap
+```
+```
+kapp deploy --yes -a kc -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/v0.27.0/release.yml
+
+kapp deploy --yes -a sg -f https://github.com/vmware-tanzu/carvel-secretgen-controller/releases/download/v0.5.0/release.yml
+
+kapp deploy --yes -a cert-manager -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
+```
+
 ```
 kubectl create ns tap-install
 ```
 ```
 tanzu imagepullsecret add tap-registry \
-  --username <TANZU_NET_USER> --password <TANZU_NET_PASSWORD> \
+  --username $TANZU_NET_USER --password $TANZU_NET_PASSWORD \
   --registry registry.tanzu.vmware.com \
   --export-to-all-namespaces
-```
-```
+
 tanzu imagepullsecret add registry-credentials  \
-  --username <REGISTRY_USERNAME> --password <REGISTRY_PASSWORD> \
-  --registry <REGISTRY_SERVER> \
+  --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD \
+  --registry $REGISTRY_SERVER \
   --export-to-all-namespaces
 ```
-#kubectl apply -f versionstream/tap-install/values/local/
 
-#kubectl apply -f versionstream/tap-install/packages/
+```
+flux bootstrap github \
+  --owner=$GITHUB_USER \
+  --repository=tap-install-experiment \
+  --branch=main \
+  --path=./clusters/my-cluster \
+  --personal
+```
+
+kubectl get packagerepositories.packaging.carvel.dev -A
+kubectl get packageinstalls.packaging.carvel.dev -A
+
+=========
+
+now some customisations:
+
 
 kubectl edit secret scan-controller-tap-install-values -n tap-install
 
@@ -45,8 +80,8 @@ kubectl get secrets -n tap-install -o jsonpath="{.items[?(@.metadata.annotations
 
 kubectl apply -f metadata-store-secret.yaml
 
+####
 
+Caveats
 
-# valdate
-
-kubectl get PackageInstall -n tap-install
+no Cosign secrets setup

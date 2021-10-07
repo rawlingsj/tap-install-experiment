@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: default-supply-chain-tap-install
+  name: default-supply-chain-tap-install-sa
+  namespace: tap-install

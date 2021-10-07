@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: cartographer-tap-install
+  name: cartographer-tap-install-sa
+  namespace: tap-install

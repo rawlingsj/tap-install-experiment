@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: app-accelerator-tap-install
+  name: app-accelerator-tap-install-cluster-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: app-accelerator-tap-install-cluster-role
+subjects:
+- kind: ServiceAccount
+  name: app-accelerator-tap-install-sa
+  namespace: tap-install

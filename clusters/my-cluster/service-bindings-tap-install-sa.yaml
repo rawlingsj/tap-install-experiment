@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: service-bindings-tap-install
+  name: service-bindings-tap-install-sa
+  namespace: tap-install

@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: default-supply-chain-tap-install
+  name: default-supply-chain-tap-install-cluster-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: default-supply-chain-tap-install-cluster-role
+subjects:
+- kind: ServiceAccount
+  name: default-supply-chain-tap-install-sa
+  namespace: tap-install

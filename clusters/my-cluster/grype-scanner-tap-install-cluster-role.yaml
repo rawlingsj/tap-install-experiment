@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: grype-scanner-tap-install
+  name: grype-scanner-tap-install-cluster-role
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'

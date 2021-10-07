@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: metadata-store-tap-install
+  name: metadata-store-tap-install-sa
+  namespace: tap-install

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: image-policy-webhook-tap-install
+  name: image-policy-webhook-tap-install-sa
+  namespace: tap-install

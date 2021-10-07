@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: grype-scanner-tap-install
+  name: grype-scanner-tap-install-sa
+  namespace: tap-install
