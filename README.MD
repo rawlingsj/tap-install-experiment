@@ -44,25 +44,46 @@ flux bootstrap github \
   --personal
 ```
 
-kubectl get packagerepositories.packaging.carvel.dev -A
-kubectl get packageinstalls.packaging.carvel.dev -A
+
+
 
 =========
 
-now some customisations:
+now add some secrets that contain sensitive data:
 
+(following can to be replaced using some templating approach)
 
-kubectl edit secret scan-controller-tap-install-values -n tap-install
+1. tbs registry details
 
-The `metadataStoreCa` value can be determined by:
-
+```yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: tbs-tap-install
+  name: tbs-tap-install-values
+  namespace: tap-install
+stringData:
+  tbs-values.yaml: |
+    ---
+    kp_default_repository: $REGISTRY_SERVER
+    kp_default_repository_username: $REGISTRY_USERNAME
+    kp_default_repository_password: $REGISTRY_PASSWORD
+    tanzunet_username: $TANZU_NET_USER
+    tanzunet_password: $TANZU_NET_PASSWORD
+type: Opaque
+EOF
 ```
-kubectl get secret app-tls-cert -n metadata-store -o json | jq -r '.data."ca.crt"' | base64 -d
-```
 
-Create a metadata-store-secret.yaml for this secret:
+2. metadata cert
+
+run:
+```bash
+export METADATA_STORE_TOKEN=$(kubectl get secrets -n tap-install -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='metadata-store-tap-install-sa')].data.token}" | base64 -d)
 ```
----
+```yaml
+cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: Secret
 metadata:
@@ -70,18 +91,48 @@ metadata:
   namespace: scan-link-system
 type: kubernetes.io/opaque
 stringData:
-  token: <METADATA_STORE_TOKEN>
+  token: $METADATA_STORE_TOKEN
+EOF
 ```
 
-The METADATA_STORE_TOKEN value can be determined by:
+3. run:
+```bash
+kubectl get secret app-tls-cert -n metadata-store -o json | jq -r '.data."ca.crt"' | base64 -d > DELETEME
 ```
-kubectl get secrets -n tap-install -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='metadata-store-tap-install-sa')].data.token}" | base64 -d
+```yaml
+cat <<EOF |  kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    tkg.tanzu.vmware.com/tanzu-package: scan-controller-tap-install
+  name: scan-controller-tap-install-values
+  namespace: tap-install
+stringData:
+  scst-scan-controller-values.yaml: |
+    ---
+    metadataStoreUrl: https://metadata-store-app.metadata-store.svc.cluster.local:8443
+    metadataStoreCa: |-
+$(awk '{printf "      %s\n", $0}' < DELETEME)
+    metadataStoreTokenSecret: metadata-store-secret
+type: Opaque
+EOF
+```
+```bash
+rm DELETEME
 ```
 
-kubectl apply -f metadata-store-secret.yaml
-
+watch until package reconciles:
+```bash
+kubectl get packagerepositories.packaging.carvel.dev -n tap-install --watch
+```
+watch until installs reconcile:
+```bash
+kubectl get packageinstalls.packaging.carvel.dev -A
+```
 ####
 
 Caveats
 
-no Cosign secrets setup
+- defaulted to local (kind) installs
+- no Cosign secrets setup
