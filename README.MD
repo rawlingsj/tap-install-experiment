@@ -1,4 +1,4 @@
-These are experimental docs that make up a proof of concept to enable a GitOps approach for installing and upgrading [Tanzu Community Edition](https://tanzucommunityedition.io/).
+These are experimental docs that make up a proof of concept to enable a GitOps approach for installing and upgrading TAP.
 
 This experiment whilst is very generic has only been tested with a local [kind](https://kind.sigs.k8s.io/) cluster so other cloud providers are work in progress depending on the sucess of this experiment.
 
@@ -76,7 +76,7 @@ flux bootstrap github \
   --owner=$GITHUB_USER \
   --repository=$TAP_GITOPS_REPOSITORY \
   --branch=main \
-  --path=./tap-base-install \
+  --path=./versionstream/tap-base-install \
   --personal
 ```
 
