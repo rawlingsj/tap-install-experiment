@@ -6,8 +6,6 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: scan-controller-tap-install-cluster-rolebinding
     tkg.tanzu.vmware.com/tanzu-package-Secret: scan-controller-tap-install-values
     tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: scan-controller-tap-install-sa
-  finalizers:
-  - finalizers.packageinstall.packaging.carvel.dev/delete
   name: scan-controller
   namespace: tap-install
 spec:

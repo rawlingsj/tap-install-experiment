@@ -6,8 +6,6 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: app-live-view-tap-install-cluster-rolebinding
     tkg.tanzu.vmware.com/tanzu-package-Secret: app-live-view-tap-install-values
     tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: app-live-view-tap-install-sa
-  finalizers:
-  - finalizers.packageinstall.packaging.carvel.dev/delete
   generation: 1
   name: app-live-view
   namespace: tap-install

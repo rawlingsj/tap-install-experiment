@@ -26,7 +26,7 @@ click > https://github.com/rawlingsj/tap-install-experiment/generate
 |`REGISTRY_USERNAME` | wine | a container registry username authenticatiom to push images to
 |`REGISTRY_PASSWORD` | beer456! | a container registry password or token authenticatiom to push images to
 |`GITHUB_USER` | chucknorris | github username to interact with github
-|`GITHUB_TOKEN` | ghp_1234 | github personal access token used to interact with github see https://github.com/settings/tokens/new?scopes=repo,read:user,read:org,user:email,write:repo_hook,admin:repo_hook
+|`GITHUB_TOKEN` | ghp_1234abcde | github personal access token used to interact with github see https://github.com/settings/tokens/new?scopes=repo,read:user,read:org,user:email,write:repo_hook,admin:repo_hook
 
 open your terminal and set your environment variables:
 
@@ -69,12 +69,12 @@ tanzu imagepullsecret add registry-credentials  \
   --export-to-all-namespaces
 ```
 
-6. Install [Flux](https://github.com/fluxcd/ which will provision your cluster with [Tanzu Community Edition](https://tanzucommunityedition.io/) via Git and [Flux](https://github.com/fluxcd/)
+7. Install [Flux](https://github.com/fluxcd/ which will provision your cluster with [Tanzu Community Edition](https://tanzucommunityedition.io/) via Git and [Flux](https://github.com/fluxcd/)
 
 ```
 flux bootstrap github \
   --owner=$GITHUB_USER \
-  --repository=tap-install-experiment \
+  --repository=$TAP_GITOPS_REPOSITORY \
   --branch=main \
   --path=./tap-base-install \
   --personal
@@ -102,7 +102,7 @@ metadata:
 stringData:
   tbs-values.yaml: |
     ---
-    kp_default_repository: $REGISTRY_SERVER
+    kp_default_repository: $REGISTRY_SERVER/build-service/tbs
     kp_default_repository_username: $REGISTRY_USERNAME
     kp_default_repository_password: $REGISTRY_PASSWORD
     tanzunet_username: $TANZU_NET_USER
@@ -152,7 +152,8 @@ stringData:
 $(awk '{printf "      %s\n", $0}' < DELETEME)
     metadataStoreTokenSecret: metadata-store-secret
 type: Opaque
-EOF && rm DELETEME
+EOF
+rm DELETEME
 ```
 
 ---
@@ -163,7 +164,7 @@ kubectl get packagerepositories.packaging.carvel.dev -n tap-install --watch
 ```
 watch until installs reconcile:
 ```bash
-kubectl get packageinstalls.packaging.carvel.dev -A
+kubectl get packageinstalls.packaging.carvel.dev -A --watch
 ```
 # Caveats + extra work or discovery needed
 

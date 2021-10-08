@@ -5,8 +5,6 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package-ClusterRole: source-controller-tap-install-cluster-role
     tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: source-controller-tap-install-cluster-rolebinding
     tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: source-controller-tap-install-sa
-  finalizers:
-  - finalizers.packageinstall.packaging.carvel.dev/delete
   name: source-controller
   namespace: tap-install
 spec:

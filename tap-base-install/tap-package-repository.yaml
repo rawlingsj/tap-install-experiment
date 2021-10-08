@@ -1,8 +1,6 @@
 apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageRepository
 metadata:
-  finalizers:
-  - finalizers.packagerepository.packaging.carvel.dev/delete
   name: tanzu-tap-repository
   namespace: tap-install
 spec:

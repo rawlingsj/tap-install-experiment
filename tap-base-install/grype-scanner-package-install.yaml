@@ -5,8 +5,6 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package-ClusterRole: grype-scanner-tap-install-cluster-role
     tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: grype-scanner-tap-install-cluster-rolebinding
     tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: grype-scanner-tap-install-sa
-  finalizers:
-  - finalizers.packageinstall.packaging.carvel.dev/delete
   name: grype-scanner
   namespace: tap-install
 spec:
