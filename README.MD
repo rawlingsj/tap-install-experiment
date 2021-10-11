@@ -23,7 +23,7 @@ click > https://github.com/rawlingsj/tap-install-experiment/generate
 |`TAP_GITOPS_REPOSITORY` | chucknorris | YOUR cluster Github repository name that you chose during step 1 above |
 |`TANZU_NET_USER` | foo | username after signing up to https://network.tanzu.vmware.com/ in step 1 to pull Tanzu Application platform images |
 |`TANZU_NET_PASSWORD` | bar123! | password after sigining up to https://network.tanzu.vmware.com/ in step 1 to pull Tanzu Application platform images
-|`REGISTRY_SERVER` | docker.io/cheese | a container registry server and user / organisation to push images to
+|`REGISTRY_SERVER` | docker.io | a container registry server and user / organisation to push images to
 |`REGISTRY_USERNAME` | wine | a container registry username authenticatiom to push images to
 |`REGISTRY_PASSWORD` | beer456! | a container registry password or token authenticatiom to push images to
 |`GITHUB_USER` | chucknorris | github username to interact with github
@@ -103,7 +103,7 @@ metadata:
 stringData:
   tbs-values.yaml: |
     ---
-    kp_default_repository: $REGISTRY_SERVER/build-service
+    kp_default_repository: $REGISTRY_SERVER/$REGISTRY_USERNAME/build-service
     kp_default_repository_username: $REGISTRY_USERNAME
     kp_default_repository_password: $REGISTRY_PASSWORD
     tanzunet_username: $TANZU_NET_USER
