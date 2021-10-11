@@ -67,7 +67,7 @@ tanzu imagepullsecret add tap-registry \
 tanzu imagepullsecret add registry-credentials  \
   --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD \
   --registry $REGISTRY_SERVER \
-  --export-to-all-namespaces
+  --namespace default
 ```
 
 7. Install [Flux](https://github.com/fluxcd/] which will provision your cluster with the packages of [Tanzu Application Platform](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.2/tap-0-2/GUID-overview.html) via Git and [Flux](https://github.com/fluxcd/)
