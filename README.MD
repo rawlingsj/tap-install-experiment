@@ -1,4 +1,4 @@
-These are experimental docs that make up a proof of concept to enable a GitOps approach for installing and upgrading TAP.
+These are experimental docs that make up a proof of concept to enable a GitOps approach for installing packages for [TAP](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.2/tap-0-2/GUID-overview.html).
 
 This experiment whilst is very generic has only been tested with a local [kind](https://kind.sigs.k8s.io/) cluster so other cloud providers are work in progress depending on the sucess of this experiment.
 
