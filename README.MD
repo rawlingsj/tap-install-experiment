@@ -4,6 +4,7 @@ This experiment whilst is very generic has only been tested with a local [kind](
 
 # Prerequisits
 
+- Ensure you follow prerequisits 1,2 and 3 [here](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.2/tap-0-2/GUID-install-intro.html)
 - [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) - Minimum requirements: 8 CPUs for i9 or equivalent, 12 CPUs for i7 or equivalent, 8 GB RAM (12+ GB recommended), 120 GB disk space. If on DockerDesktop for Mac check your Resources under the Preferences section.
 - [`flux cli`](https://fluxcd.io/docs/installation/#install-the-flux-cli)
 - [`carvel tooling`](https://github.com/vmware-tanzu/carvel-kapp/releases/latest)
@@ -69,7 +70,7 @@ tanzu imagepullsecret add registry-credentials  \
   --export-to-all-namespaces
 ```
 
-7. Install [Flux](https://github.com/fluxcd/ which will provision your cluster with [Tanzu Community Edition](https://tanzucommunityedition.io/) via Git and [Flux](https://github.com/fluxcd/)
+7. Install [Flux](https://github.com/fluxcd/] which will provision your cluster with the packages of [Tanzu Application Platform](https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.2/tap-0-2/GUID-overview.html) via Git and [Flux](https://github.com/fluxcd/)
 
 ```
 flux bootstrap github \
@@ -102,7 +103,7 @@ metadata:
 stringData:
   tbs-values.yaml: |
     ---
-    kp_default_repository: $REGISTRY_SERVER/build-service/tbs
+    kp_default_repository: $REGISTRY_SERVER/build-service
     kp_default_repository_username: $REGISTRY_USERNAME
     kp_default_repository_password: $REGISTRY_PASSWORD
     tanzunet_username: $TANZU_NET_USER
